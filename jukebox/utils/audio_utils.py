@@ -24,7 +24,7 @@ def calculate_bandwidth(dataset, hps, duration=600):
     n_samples = int(dataset.sr * duration)
     l1, total, total_sq, n_seen, idx = 0.0, 0.0, 0.0, 0.0, dist.get_rank()
     spec_norm_total, spec_nelem = 0.0, 0.0
-    while n_seen < n_samples:
+    while n_seen < n_samples and idx < len(dataset):
         x = dataset[idx]
         if isinstance(x, (tuple, list)):
             x, y = x
@@ -136,7 +136,7 @@ def load_audio(file, sr, offset, duration, mono=False):
     x, _ = librosa.load(file, sr=sr, mono=mono, offset=offset/sr, duration=duration/sr)
     if len(x.shape) == 1:
         x = x.reshape((1, -1))
-    return x    
+    return x
 
 
 def save_wav(fname, aud, sr):
@@ -144,5 +144,3 @@ def save_wav(fname, aud, sr):
     aud = t.clamp(aud, -1, 1).cpu().numpy()
     for i in list(range(aud.shape[0])):
         soundfile.write(f'{fname}/item_{i}.wav', aud[i], samplerate=sr, format='wav')
-
-
