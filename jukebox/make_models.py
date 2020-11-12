@@ -18,6 +18,8 @@ MODELS = {
     '5b': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_5b"),
     '5b_lyrics': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_5b_lyrics"),
     '1b_lyrics': ("vqvae", "upsampler_level_0", "upsampler_level_1", "prior_1b_lyrics"),
+    'psy_model': ("small_psy_vqvae", "small_psy_upsampler_level_1", "small_psy_prior")
+    #'psy_model': ("small_psy_vqvae", "small_psy_upsampler_level_0", "small_psy_upsampler_level_1", "small_psy_prior")
     #'your_model': ("you_vqvae_here", "your_upsampler_here", ..., "you_top_level_prior_here")
 }
 

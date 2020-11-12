@@ -56,6 +56,28 @@ vqvae = Hyperparams(
 )
 HPARAMS_REGISTRY["vqvae"] = vqvae
 
+small_psy_vqvae = Hyperparams(
+    levels = 3,
+    downs_t = (3, 2, 2),
+    strides_t = (2, 2, 2),
+    emb_width = 64,
+    l_bins = 2048,
+    l_mu = 0.99,
+    commit = 0.02,
+    spectral = 0.0,
+    multispectral = 1.0,
+    hvqvae_multipliers = (2, 1, 1),
+    loss_fn = 'lmix',
+    lmix_l2 = 1.0,
+    lmix_linf=0.02,
+    width = 32,
+    depth = 4,
+    m_conv = 1.0,
+    dilation_growth_rate = 3,
+    restore_vqvae='/content/gdrive/My Drive/psy_vqvae/small_psy_vqvae.pth.tar',
+)
+HPARAMS_REGISTRY["small_psy_vqvae"] = small_psy_vqvae
+
 labels = Hyperparams(
     y_bins=(120, 4111),
     t_bins=128,
@@ -97,6 +119,43 @@ upsampler_level_1 = Hyperparams(
 )
 upsampler_level_1.update(upsamplers)
 HPARAMS_REGISTRY["upsampler_level_1"] = upsampler_level_1
+
+small_psy_upsampler_level_0 = Hyperparams(
+    level=0,
+    restore_prior='/content/gdrive/My Drive/upsamplers/small_psy_prior_level_0.pth.tar'
+)
+small_psy_upsampler_level_0.update(upsamplers)
+HPARAMS_REGISTRY["small_psy_upsampler_level_0"] = small_psy_upsampler_level_0
+
+small_psy_upsampler_level_1 = Hyperparams(
+    level=1,
+    cond_res_scale=True,
+    restore_prior='/content/gdrive/My Drive/upsamplers/small_psy_prior_level_1.pth.tar'
+)
+small_psy_upsampler_level_1.update(upsamplers)
+HPARAMS_REGISTRY["small_psy_upsampler_level_1"] = small_psy_upsampler_level_1
+
+small_psy_prior = Hyperparams(
+    level=2,
+    n_ctx=8192,
+    prior_width=4800,
+    prior_depth=72,
+    heads=8,
+    attn_order=2,
+    blocks=128,
+    init_scale=0.1,
+    c_res=1,
+    beta2=0.925,
+    min_duration=60.0,
+    max_duration=600.0,
+    use_tokens=False,
+    n_tokens=0,
+    prime_loss_fraction=0.0,
+    merged_decoder=True,
+    restore_prior='/content/gdrive/My Drive/priors/small_psy_prior_level_2.pth.tar',
+    fp16_params=True,
+)
+HPARAMS_REGISTRY["small_psy_prior"] = small_psy_prior
 
 prior_5b = Hyperparams(
     level=2,
